@@ -1,0 +1,15 @@
+body {
+  margin: 0;
+}
+
+.App {
+  box-sizing: border-box;
+  text-align: center;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+  background-color: aliceblue;
+}
