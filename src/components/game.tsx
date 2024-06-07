@@ -32,12 +32,7 @@ function Game() {
         </div>
         <div className="game-info">
           <ol>
-            <Moves
-              history={history}
-              squares={currentSquares}
-              move={currentMove}
-              jumpTo={jumpTo}
-            />
+            <Moves history={history} jumpTo={jumpTo} />
           </ol>
         </div>
       </div>
