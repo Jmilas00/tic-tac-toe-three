@@ -1,16 +1,23 @@
 import { useState } from "react";
 import SimpleBoard from "./simple-board";
+import Moves from "./moves";
 
 function Game() {
-  const [firstPlayerTurn, setFirstPlayerTurn] = useState<boolean>(true);
   const [history, setHistory] = useState<Array<Array<string>>>([
     Array(9).fill(null),
   ]);
-  const currentSquares = history[history.length - 1];
+  const [currentMove, setCurrentMove] = useState<number>(0);
+  const firstPlayerTurn = currentMove % 2 === 0;
+  const currentSquares = history[currentMove];
 
-  function handlePlay(nextSquares: Array<string>) {
-    setHistory([...history, nextSquares]);
-    setFirstPlayerTurn(!firstPlayerTurn);
+  function handlePlay(nextSquares: Array<string>): void {
+    const nextHistory = [...history.slice(0, currentMove + 1), nextSquares];
+    setHistory(nextHistory);
+    setCurrentMove(nextHistory.length - 1);
+  }
+
+  function jumpTo(nextMove: number): void {
+    setCurrentMove(nextMove);
   }
 
   return (
@@ -24,7 +31,14 @@ function Game() {
           />
         </div>
         <div className="game-info">
-          <ol>{/*TODO*/}</ol>
+          <ol>
+            <Moves
+              history={history}
+              squares={currentSquares}
+              move={currentMove}
+              jumpTo={jumpTo}
+            />
+          </ol>
         </div>
       </div>
     </>
