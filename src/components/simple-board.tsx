@@ -2,10 +2,14 @@ import { useState } from "react";
 import Square from "./square";
 import calculateWinner from "../functions/calculate-winner";
 
-function SimpleBoard() {
-  const [squares, setSquares] = useState<Array<string>>(Array(9).fill(null));
-  const [firstPlayerTurn, setFirstPlayerTurn] = useState<boolean>(true);
+interface SimpleBoardProps {
+  firstPlayerTurn: boolean;
+  squares: Array<string>;
+  onPlay(nextSquares: Array<string>): void;
+}
 
+function SimpleBoard(props: SimpleBoardProps) {
+  const squares = props.squares;
   const winner: string | null = calculateWinner({ squares });
 
   function handleSquareClick(squareNum: number): void {
@@ -13,20 +17,19 @@ function SimpleBoard() {
       return;
     }
     const nextSquares = squares.slice();
-    if (firstPlayerTurn) {
+    if (props.firstPlayerTurn) {
       nextSquares[squareNum] = "X";
     } else {
       nextSquares[squareNum] = "O";
     }
-    setSquares(nextSquares);
-    setFirstPlayerTurn(!firstPlayerTurn);
+    props.onPlay(nextSquares);
   }
 
   let gameStatus: string;
   if (winner) {
     gameStatus = "The winner is: " + winner;
   } else {
-    gameStatus = "Next player is: " + (firstPlayerTurn ? "X" : "O");
+    gameStatus = "Next player is: " + (props.firstPlayerTurn ? "X" : "O");
   }
 
   return (

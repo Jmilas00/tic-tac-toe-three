@@ -1,10 +1,10 @@
-import SimpleBoard from "../components/simple-board";
+import Game from "../components/game";
 
 function Home() {
   return (
     <>
       <div>home</div>
-      <SimpleBoard />
+      <Game />
     </>
   );
 }
