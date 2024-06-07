@@ -1,5 +1,6 @@
 interface MovesProps {
   history: Array<Array<string>>;
+  ascendingHistory: boolean;
   jumpTo(nextMove: number): void;
 }
 
@@ -9,7 +10,6 @@ function Moves(props: MovesProps) {
     let description: string;
     if (move === props.history.length - 1) {
       description = "You are at move#" + move;
-      return <li key={move}>{description}</li>;
     } else if (move > 0) {
       description = "Go to move #" + move;
     } else {
@@ -18,7 +18,11 @@ function Moves(props: MovesProps) {
     return (
       <>
         <li key={move}>
-          <button onClick={() => jumpTo(move)}>{description}</button>
+          {move === props.history.length - 1 ? (
+            description
+          ) : (
+            <button onClick={() => jumpTo(move)}>{description}</button>
+          )}
         </li>
       </>
     );

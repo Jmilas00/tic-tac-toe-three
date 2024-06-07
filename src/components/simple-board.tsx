@@ -31,24 +31,30 @@ function SimpleBoard(props: SimpleBoardProps) {
     gameStatus = "Next player is: " + (props.firstPlayerTurn ? "X" : "O");
   }
 
+  let board: JSX.Element[] = [];
+  for (let i: number = 0; i < 3; i++) {
+    let boardRow: JSX.Element[] = [];
+    for (let j: number = i * 3; j < i * 3 + 3; j++) {
+      boardRow.push(
+        <Square
+          key={j + "square"}
+          value={squares[j]}
+          num={j}
+          onSquareClick={handleSquareClick}
+        />
+      );
+    }
+    board.push(
+      <div key={i + "row"} className="board-row">
+        {boardRow}
+      </div>
+    );
+  }
+
   return (
     <>
       <div className="game-status">{gameStatus}</div>
-      <div className="board-row">
-        <Square value={squares[0]} num={0} onSquareClick={handleSquareClick} />
-        <Square value={squares[1]} num={1} onSquareClick={handleSquareClick} />
-        <Square value={squares[2]} num={2} onSquareClick={handleSquareClick} />
-      </div>
-      <div className="board-row">
-        <Square value={squares[3]} num={3} onSquareClick={handleSquareClick} />
-        <Square value={squares[4]} num={4} onSquareClick={handleSquareClick} />
-        <Square value={squares[5]} num={5} onSquareClick={handleSquareClick} />
-      </div>
-      <div className="board-row">
-        <Square value={squares[6]} num={6} onSquareClick={handleSquareClick} />
-        <Square value={squares[7]} num={7} onSquareClick={handleSquareClick} />
-        <Square value={squares[8]} num={8} onSquareClick={handleSquareClick} />
-      </div>
+      {board}
     </>
   );
 }

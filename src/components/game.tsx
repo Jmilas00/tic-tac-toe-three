@@ -7,6 +7,7 @@ function Game() {
     Array(9).fill(null),
   ]);
   const [currentMove, setCurrentMove] = useState<number>(0);
+  const [ascendingHistory, setAscendingHistory] = useState<boolean>(false);
   const firstPlayerTurn = currentMove % 2 === 0;
   const currentSquares = history[currentMove];
 
@@ -32,8 +33,16 @@ function Game() {
         </div>
         <div className="game-info">
           <ol>
-            <Moves history={history} jumpTo={jumpTo} />
+            <Moves
+              history={history}
+              jumpTo={jumpTo}
+              ascendingHistory={ascendingHistory}
+            />
           </ol>
+          <button onClick={() => setAscendingHistory(!ascendingHistory)}>
+            Set history to
+            {ascendingHistory === true ? " descending" : " ascending"}
+          </button>
         </div>
       </div>
     </>
