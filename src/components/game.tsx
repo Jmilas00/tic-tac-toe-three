@@ -8,8 +8,8 @@ function Game() {
   ]);
   const [currentMove, setCurrentMove] = useState<number>(0);
   const [ascendingHistory, setAscendingHistory] = useState<boolean>(false);
-  const firstPlayerTurn = currentMove % 2 === 0;
-  const currentSquares = history[currentMove];
+  const firstPlayerTurn: boolean = currentMove % 2 === 0;
+  const currentSquares: string[] = history[currentMove];
 
   function handlePlay(nextSquares: Array<string>): void {
     const nextHistory = [...history.slice(0, currentMove + 1), nextSquares];
