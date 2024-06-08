@@ -27,7 +27,9 @@ function Moves(props: MovesProps) {
       </>
     );
   });
-
+  if (props.ascendingHistory) {
+    moves.reverse();
+  }
   return moves;
 }
 
