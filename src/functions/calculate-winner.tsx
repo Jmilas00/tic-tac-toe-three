@@ -19,9 +19,9 @@ const calculateWinner = (props: calculateWinnerProps) => {
       props.squares[a] &&
       props.squares[a] === props.squares[b] &&
       props.squares[a] === props.squares[c]
-    )
+    ) {
       return { winner: props.squares[a], winningSquares: [a, b, c] };
-    else if (props.squares.filter((square) => square === null).length === 0) {
+    } else if (props.squares.filter((square) => square === null).length === 0) {
       return { winner: "tie", winningSquares: [] };
     }
   }

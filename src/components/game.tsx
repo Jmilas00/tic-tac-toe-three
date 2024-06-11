@@ -1,6 +1,6 @@
 import { useState } from "react";
 import SimpleBoard from "./simple-board";
-import Moves from "./moves";
+import GameInfo from "./game-info";
 
 function Game() {
   const [history, setHistory] = useState<Array<Array<string>>>([
@@ -31,19 +31,12 @@ function Game() {
             onPlay={handlePlay}
           />
         </div>
-        <div className="game-info">
-          <ol>
-            <Moves
-              history={history}
-              jumpTo={jumpTo}
-              ascendingHistory={ascendingHistory}
-            />
-          </ol>
-          <button onClick={() => setAscendingHistory(!ascendingHistory)}>
-            Set history to
-            {ascendingHistory === true ? " descending" : " ascending"}
-          </button>
-        </div>
+        <GameInfo
+          history={history}
+          jumpTo={jumpTo}
+          ascendingHistory={ascendingHistory}
+          setAscendingHistory={setAscendingHistory}
+        />
       </div>
     </>
   );
