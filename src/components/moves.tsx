@@ -47,7 +47,9 @@ function Moves(props: MovesProps) {
             " Player: " +
             description.player
           ) : (
-            <button onClick={() => jumpTo(move)}>{description.text}</button>
+            <button className="moves-button" onClick={() => jumpTo(move)}>
+              {description.text}
+            </button>
           )}
         </li>
       </>

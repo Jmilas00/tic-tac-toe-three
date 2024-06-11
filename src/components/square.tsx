@@ -10,7 +10,7 @@ interface SquareProps {
 function Square(props: SquareProps) {
   return (
     <button
-      className={props.winningMark ? "winning-square" : "square"}
+      className={props.winningMark ? "winning-square square" : "square"}
       onClick={() => {
         props.onSquareClick(props.num);
       }}

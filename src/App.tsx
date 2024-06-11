@@ -5,6 +5,7 @@ import Home from "./pages/home";
 import NotFound from "./pages/not-found";
 import Login from "./pages/login";
 import Contact from "./pages/contact";
+import Classic from "./pages/classic";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
           <Navbar />
           <Routes>
             <Route path="/" element={<Home />} />
+            <Route path="/classic" element={<Classic />} />
             <Route path="/login" element={<Login />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="*" element={<NotFound />} />
