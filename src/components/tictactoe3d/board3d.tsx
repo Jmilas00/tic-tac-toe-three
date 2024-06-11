@@ -1,7 +1,7 @@
-import Square from "./square";
-import calculateWinner from "../functions/calculate-winner";
+import calculateWinner3D from "../../functions/calculate-winner-3d";
+import Board from "../board";
 
-interface SimpleBoardProps {
+interface Board3DProps {
   firstPlayerTurn: boolean;
   squares: Array<string>;
   onPlay(nextSquares: Array<string>): void;
@@ -12,9 +12,9 @@ interface Winner {
   winningSquares: number[];
 }
 
-function SimpleBoard(props: SimpleBoardProps) {
+function Board3D(props: Board3DProps) {
   const squares = props.squares;
-  const winner: Winner | null = calculateWinner({ squares });
+  const winner: Winner | null = calculateWinner3D({ squares });
 
   function handleSquareClick(squareNum: number): void {
     if (squares[squareNum] || winner) {
@@ -38,35 +38,16 @@ function SimpleBoard(props: SimpleBoardProps) {
     gameStatus = "Next player is: " + (props.firstPlayerTurn ? "X" : "O");
   }
 
-  let board: JSX.Element[] = [];
-  for (let i: number = 0; i < 3; i++) {
-    let boardRow: JSX.Element[] = [];
-    for (let j: number = i * 3; j < i * 3 + 3; j++) {
-      let winningMark: boolean = false;
-      if (winner?.winningSquares.includes(j)) winningMark = true;
-      boardRow.push(
-        <Square
-          key={j + "square"}
-          value={squares[j]}
-          num={j}
-          onSquareClick={handleSquareClick}
-          winningMark={winningMark}
-        />
-      );
-    }
-    board.push(
-      <div key={i + "row"} className="board-row">
-        {boardRow}
-      </div>
-    );
-  }
-
   return (
     <>
       <div className="game-status">{gameStatus}</div>
-      {board}
+      <Board
+        winningSquares={winner?.winningSquares}
+        handleSquareClick={handleSquareClick}
+        squares={squares}
+      />
     </>
   );
 }
 
-export default SimpleBoard;
+export default Board3D;

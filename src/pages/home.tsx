@@ -1,10 +1,10 @@
-import Game from "../components/game";
+import Game3D from "../components/tictactoe3d/game3d";
 
 function Home() {
   return (
     <>
       <div>home</div>
-      <Game />
+      <Game3D />
     </>
   );
 }

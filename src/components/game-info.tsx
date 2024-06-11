@@ -1,27 +1,25 @@
 import Moves from "./moves";
+import { useState } from "react";
 
 interface GameInfoProps {
   history: Array<Array<string>>;
   jumpTo(nextMove: number): void;
-  ascendingHistory: boolean;
-  setAscendingHistory: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 function GameInfo(props: GameInfoProps) {
+  const [ascendingHistory, setAscendingHistory] = useState<boolean>(false);
   return (
     <div className="game-info">
       <ol>
         <Moves
           history={props.history}
           jumpTo={props.jumpTo}
-          ascendingHistory={props.ascendingHistory}
+          ascendingHistory={ascendingHistory}
         />
       </ol>
-      <button
-        onClick={() => props.setAscendingHistory(!props.ascendingHistory)}
-      >
+      <button onClick={() => setAscendingHistory(!ascendingHistory)}>
         Set history to
-        {props.ascendingHistory === true ? " descending" : " ascending"}
+        {ascendingHistory === true ? " descending" : " ascending"}
       </button>
     </div>
   );
