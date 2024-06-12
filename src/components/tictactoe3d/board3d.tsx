@@ -44,7 +44,19 @@ function Board3D(props: Board3DProps) {
       <Board
         winningSquares={winner?.winningSquares}
         handleSquareClick={handleSquareClick}
-        squares={squares}
+        squares={squares.slice(0, 8)}
+      />
+      <Board
+        winningSquares={winner?.winningSquares}
+        handleSquareClick={handleSquareClick}
+        squares={squares.slice(9, 17)}
+        initialSquare={9}
+      />
+      <Board
+        winningSquares={winner?.winningSquares}
+        handleSquareClick={handleSquareClick}
+        squares={squares.slice(18, 26)}
+        initialSquare={18}
       />
     </>
   );

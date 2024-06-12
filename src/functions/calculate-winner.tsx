@@ -15,15 +15,17 @@ const calculateWinner = (props: calculateWinnerProps) => {
   ];
   for (let i = 0; i < lines.length; i++) {
     const [a, b, c] = lines[i];
-    if (
-      props.squares[a] &&
-      props.squares[a] === props.squares[b] &&
-      props.squares[a] === props.squares[c]
-    ) {
-      return { winner: props.squares[a], winningSquares: [a, b, c] };
-    } else if (props.squares.filter((square) => square === null).length === 0) {
-      return { winner: "tie", winningSquares: [] };
+    const symbol: string = props.squares[a];
+    console.log(props.squares.filter((square) => square === null).length);
+    console.log(
+      symbol && symbol === props.squares[b] && symbol === props.squares[c]
+    );
+    if (symbol && symbol === props.squares[b] && symbol === props.squares[c]) {
+      return { winner: symbol, winningSquares: [a, b, c] };
     }
+  }
+  if (props.squares.filter((square) => square === null).length === 0) {
+    return { winner: "tie", winningSquares: [] };
   }
   return null;
 };
