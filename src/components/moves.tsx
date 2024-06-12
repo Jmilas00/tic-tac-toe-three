@@ -8,6 +8,7 @@ interface Description {
   text: string;
   row: number;
   col: number;
+  layer: number;
   player: string;
 }
 
@@ -18,17 +19,20 @@ function Moves(props: MovesProps) {
       text: "",
       row: 0,
       col: 0,
+      layer: 0,
       player: "",
     };
     for (let i: number = 0; i < squares.length; i++) {
       if (move > 0 && squares[i] !== props.history[move - 1][i]) {
         description.col = (i % 3) + 1;
-        description.row = Math.trunc(i / 3 + 1);
+        description.row = Math.trunc((i % 9) / 3 + 1);
+        description.layer = Math.trunc(i / 9 + 1);
         description.player = props.history.length % 2 === 0 ? "X" : "O";
       }
     }
-
-    if (move === props.history.length - 1) {
+    /* if (move === 0) {
+      description.text = "Click a square to begin the game!";
+    } else */ if (move === props.history.length - 1) {
       description.text = "You are at move#" + move;
     } else if (move > 0) {
       description.text = "Go to move #" + move;
@@ -44,7 +48,9 @@ function Moves(props: MovesProps) {
             description.row +
             " Col: " +
             description.col +
-            " Player: " +
+            " Layer: " +
+            description.layer +
+            " Last Move by Player: " +
             description.player
           ) : (
             <button className="moves-button" onClick={() => jumpTo(move)}>
