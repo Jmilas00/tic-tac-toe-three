@@ -17,7 +17,10 @@ function Board3D(props: Board3DProps) {
   const winner: Winner | null = calculateWinner3D({ squares });
 
   function handleSquareClick(squareNum: number): void {
-    if (squares[squareNum] || winner) {
+    /*     console.log(squares.slice(0, 8));
+    console.log(squares.slice(9, 17));
+    console.log(squares.slice(18, 26));
+ */ if (squares[squareNum] || winner) {
       return;
     }
     const nextSquares = squares.slice();
@@ -44,18 +47,19 @@ function Board3D(props: Board3DProps) {
       <Board
         winningSquares={winner?.winningSquares}
         handleSquareClick={handleSquareClick}
-        squares={squares.slice(0, 8)}
+        squares={squares}
+        initialSquare={0}
       />
       <Board
         winningSquares={winner?.winningSquares}
         handleSquareClick={handleSquareClick}
-        squares={squares.slice(9, 17)}
+        squares={squares}
         initialSquare={9}
       />
       <Board
         winningSquares={winner?.winningSquares}
         handleSquareClick={handleSquareClick}
-        squares={squares.slice(18, 26)}
+        squares={squares}
         initialSquare={18}
       />
     </>

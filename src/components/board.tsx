@@ -8,25 +8,32 @@ interface BoardProps {
 }
 
 function Board(props: BoardProps) {
+  console.log(props.squares);
+  console.log(props.initialSquare);
+
   let board: JSX.Element[] = [];
   const initialSquare: number = props.initialSquare ? props.initialSquare : 0;
-  for (let i: number = initialSquare; i < initialSquare + 3; i++) {
+  for (let i: number = 0; i < 3; i++) {
     let boardRow: JSX.Element[] = [];
     for (let j: number = i * 3; j < i * 3 + 3; j++) {
       let winningMark: boolean = false;
-      if (props.winningSquares?.includes(j)) winningMark = true;
+      const currentSquare: number = j + initialSquare;
+      if (props.winningSquares?.includes(currentSquare)) winningMark = true;
       boardRow.push(
         <Square
-          key={j + "square"}
-          value={props.squares[j]}
-          num={j}
+          key={currentSquare + "square"}
+          value={props.squares[currentSquare]}
+          num={currentSquare}
           onSquareClick={props.handleSquareClick}
           winningMark={winningMark}
         />
       );
     }
     board.push(
-      <div key={i + "row"} className="board-row">
+      <div
+        key={i + Math.trunc(initialSquare / 3) + "row"}
+        className="board-row"
+      >
         {boardRow}
       </div>
     );
