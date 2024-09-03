@@ -3,14 +3,15 @@ pipeline {
     stages {
         stage('Install npm') {
             steps {
-                sh 'apt update'
-                sh 'apt upgrade'
-                sh 'apt install nodejs npm'
+                sh 'whoami'
+                sh 'sudo apt update'
+                sh 'sudo apt upgrade'
+                sh 'sudo apt install nodejs npm'
                 sh 'node -v'
                 sh 'npm -v'
             }
         }
-        
+
         stage('Install Dependencies') {
             steps {
                 sh 'npm ci'
