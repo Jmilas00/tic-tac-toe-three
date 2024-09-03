@@ -4,7 +4,6 @@ pipeline {
         stage('Install npm') {
             steps {
                 sh 'whoami'
-                sh 'apt-get install sudo'
                 sh 'sudo apt-get update'
                 sh 'sudo apt-get upgrade'
                 sh 'sudo apt-get install nodejs npm'
@@ -21,9 +20,10 @@ pipeline {
 
         stage('Run Tests') {
             steps {
-                sh 'npm test'
+                sh 'npm run test'
             }
         }
+        
         stage('Build') {
             steps {
                 echo 'Building..'
