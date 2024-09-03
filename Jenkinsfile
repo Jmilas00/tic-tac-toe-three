@@ -1,21 +1,15 @@
 pipeline {
-    agent {
-         dockerfile true 
-    }
-    stages {
-        stage('Create workdir') {
-            steps {
-                sh 'node --version'
-            }
-        }
+    agent any
+        stages {
         stage('Install Dependencies') {
             steps {
-                echo 'install dependencies'
+                sh 'npm ci'
             }
         }
+
         stage('Run Tests') {
             steps {
-                echo 'run tests'
+                sh 'npm test'
             }
         }
         stage('Build') {
