@@ -34,7 +34,7 @@ pipeline {
     }
     post {
         always {
-            junit 'reports/test-results.xml'
+            junit 'test-results.xml'
             echo 'Pipeline finished.'
         }
         failure {
