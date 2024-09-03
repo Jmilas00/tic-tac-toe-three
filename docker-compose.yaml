@@ -1,0 +1,20 @@
+networks:
+  traefik-network:
+    name: "traefik-network"
+    external: true
+
+services:
+  tictactoe:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: /tictactoe
+    restart: always
+    networks:
+      - "traefik-network"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.tictactoe.rule=Host(`tictactoe.josip-milas.buzz`)"
+      - "traefik.http.routers.tictactoe.entrypoints=websecure"
+      - "traefik.http.routers.tictactoe.tls.certresolver=myresolver"
+      - "traefik.http.services.tictactoe.loadbalancer.server.port=80"
