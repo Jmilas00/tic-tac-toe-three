@@ -1,5 +1,8 @@
 pipeline {
     agent any
+    environment { 
+        NO_COLOR = 'true'
+    }
     stages {
         stage('Install npm') {
             steps {
