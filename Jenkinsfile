@@ -5,8 +5,8 @@ pipeline {
             steps {
                 sh 'whoami'
                 sh 'sudo apt-get update'
-                sh 'sudo apt-get upgrade'
-                sh 'sudo apt-get install nodejs npm'
+                sh 'sudo apt-get -y upgrade'
+                sh 'sudo apt-get -y install nodejs npm'
                 sh 'node -v'
                 sh 'npm -v'
             }
@@ -23,7 +23,7 @@ pipeline {
                 sh 'npm run test'
             }
         }
-        
+
         stage('Build') {
             steps {
                 echo 'Building..'
