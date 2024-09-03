@@ -1,6 +1,16 @@
 pipeline {
     agent any
-        stages {
+    stages {
+        stage('Install npm') {
+            steps {
+                sh 'apt update'
+                sh 'apt upgrade'
+                sh 'apt install nodejs npm'
+                sh 'node -v'
+                sh 'npm -v'
+            }
+        }
+        
         stage('Install Dependencies') {
             steps {
                 sh 'npm ci'
