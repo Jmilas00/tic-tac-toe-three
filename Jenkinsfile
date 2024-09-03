@@ -1,9 +1,7 @@
 pipeline {
     agent any {
          dockerfile true 
-        }
     }
-
     stages {
         stage('Create workdir') {
             steps {
