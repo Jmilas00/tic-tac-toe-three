@@ -33,6 +33,7 @@ pipeline {
             }
             steps {
                 sh 'npm run test'
+                junit 'test-results.xml'
             }
         }
         stage('Deploy') {
@@ -46,7 +47,7 @@ pipeline {
     }
     post {
         always {
-            junit 'test-results.xml'
+            
             echo 'Pipeline finished.'
         }
         failure {
