@@ -2,8 +2,14 @@ pipeline {
     agent any
     environment { 
         NO_COLOR = 'true'
+        INITIAL_BRANCH = "${env.BRANCH_NAME}"
     }
     stages {
+        stage('Name initial branch') {
+            steps {
+                echo "Initial branch: ${INITIAL_BRANCH}"
+            }
+        }
         stage('Install npm') {
             when {
                 anyOf {
@@ -49,12 +55,27 @@ pipeline {
         }
     }
     post {
-        always {
-            
-            echo 'Pipeline finished.'
+        success {
+            if (env.INITIAL_BRANCH == 'main') {
+                echo 'Success on main!'
+            }
+            else if (env.INITIAL_BRANCH == 'test') {
+                echo 'Tests passed, attempting to merge into release'
+                script {
+                    sh 'git checkout release'
+                    sh 'git merge test'
+                    sh 'git push origin release'
+                }
+            }
+            else {
+                echo 'Success!'
+            }
         }
         failure {
             echo 'Pipeline failed.'
+        }
+        always {
+            echo 'Pipeline finished.'
         }
     }
 }
