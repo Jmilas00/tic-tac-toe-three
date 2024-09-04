@@ -2,7 +2,6 @@ pipeline {
     agent {
         docker {
             image 'jenkins/inbound-agent:latest-jdk21'
-            label 'docker-agent'
             args '-v /tmp:/tmp'
         }
     }
