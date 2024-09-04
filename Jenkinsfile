@@ -31,8 +31,9 @@ pipeline {
                               submoduleCfg: [],
                               userRemoteConfigs: [[url: 'https://gitea.josip-milas.buzz/ci/tic-tac-toe-three.git/']]
                     ])
+                    def branchName = env.INITIAL_BRANCH
                     sh 'git fetch --all'
-                    sh 'git checkout test'
+                    sh "git checkout ${branchName}"
                 }
             }
         }
