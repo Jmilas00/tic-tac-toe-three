@@ -5,6 +5,12 @@ pipeline {
     }
     stages {
         stage('Install npm') {
+            when {
+                anyOf {
+                    branch 'feature/*'
+                    branch 'test'
+                }
+            }
             steps {
                 sh 'whoami'
                 sh 'sudo apt-get update'
@@ -16,25 +22,35 @@ pipeline {
         }
 
         stage('Install Dependencies') {
+            when {
+                branch 'test'
+            }
             steps {
                 sh 'npm ci'
             }
         }
 
         stage('Run Tests') {
+            when {
+                branch 'test'
+            }
             steps {
                 sh 'npm run test'
+                junit 'test-results.xml'
             }
         }
         stage('Deploy') {
+            when {
+                branch 'release'
+            }
             steps {
-                echo 'Deploying....'
+                echo 'Deploying...'
             }
         }
     }
     post {
         always {
-            junit 'test-results.xml'
+            
             echo 'Pipeline finished.'
         }
         failure {
