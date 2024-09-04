@@ -56,19 +56,19 @@ pipeline {
     }
     post {
         success {
-            if (env.INITIAL_BRANCH == 'main') {
-                echo 'Success on main!'
-            }
-            else if (env.INITIAL_BRANCH == 'test') {
-                echo 'Tests passed, attempting to merge into release'
-                script {
-                    sh 'git checkout release'
-                    sh 'git merge test'
-                    sh 'git push origin release'
+            script {
+                if (env.INITIAL_BRANCH == 'main') {
+                    echo 'Success on main!'
                 }
-            }
-            else {
-                echo 'Success!'
+                else if (env.INITIAL_BRANCH == 'test') {
+                    echo 'Tests passed, attempting to merge into release'
+                        sh 'git checkout release'
+                        sh 'git merge test'
+                        sh 'git push origin release'
+                    }
+                else {
+                    echo 'Success!'
+                }
             }
         }
         failure {
