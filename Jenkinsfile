@@ -1,6 +1,10 @@
 pipeline {
     agent {
-        docker { image 'node:20.17.0-alpine3.20' }
+        docker {
+            image 'jenkins/inbound-agent:latest-jdk21'
+            label 'docker'
+            args '-v /tmp:/tmp'
+        }
     }
     stages {
         stage('Test') {
