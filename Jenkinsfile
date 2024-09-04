@@ -24,6 +24,13 @@ pipeline {
         stage('Checkout') {
             steps {
                 script {
+                    checkout([$class: 'GitSCM',
+                              branches: [[name: '*/main']],
+                              doGenerateSubmoduleConfigurations: false,
+                              extensions: [[$class: 'CloneOption', depth: 0, noTags: false, reference: '', shallow: false]],
+                              submoduleCfg: [],
+                              userRemoteConfigs: [[url: 'https://gitea.josip-milas.buzz/ci/tic-tac-toe-three.git/']]
+                    ])
                     sh 'git fetch --all'
                     sh 'git checkout test'
                 }
