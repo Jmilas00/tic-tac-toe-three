@@ -6,7 +6,10 @@ pipeline {
     stages {
         stage('Install npm') {
             when {
-                branch 'feature/*'
+                anyOf {
+                    branch 'feature/*'
+                    branch 'test'
+                }
             }
             steps {
                 sh 'whoami'
