@@ -21,6 +21,14 @@ pipeline {
         INITIAL_BRANCH = "${env.BRANCH_NAME}"
     }
     stages {
+        stage('Checkout') {
+            steps {
+                script {
+                    sh 'git fetch --all'
+                    sh 'git checkout test'
+                }
+            }
+        }
         stage('Name initial branch') {
             steps {
                 echo "Initial branch: ${INITIAL_BRANCH}"
