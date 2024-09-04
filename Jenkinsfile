@@ -5,6 +5,9 @@ pipeline {
     }
     stages {
         stage('Install npm') {
+            when {
+                branch 'feature/*'
+            }
             steps {
                 sh 'whoami'
                 sh 'sudo apt-get update'
@@ -16,19 +19,28 @@ pipeline {
         }
 
         stage('Install Dependencies') {
+            when {
+                branch 'test'
+            }
             steps {
                 sh 'npm ci'
             }
         }
 
         stage('Run Tests') {
+            when {
+                branch 'test'
+            }
             steps {
                 sh 'npm run test'
             }
         }
         stage('Deploy') {
+            when {
+                branch 'release'
+            }
             steps {
-                echo 'Deploying....'
+                echo 'Deploying...'
             }
         }
     }
