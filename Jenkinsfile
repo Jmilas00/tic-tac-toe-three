@@ -90,7 +90,8 @@ pipeline {
                 }
                 else if (env.INITIAL_BRANCH == 'test') {
                     echo 'Tests passed, attempting to merge into release'
-                        sh 'git checkout release'
+                        sh 'git fetch origin'
+                        sh 'git checkout release || git checkout -b release origin/release'
                         sh 'git merge test'
                         sh 'git push origin release'
                     }
