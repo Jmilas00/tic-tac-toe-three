@@ -1,3 +1,19 @@
+// pipeline {
+//     agent {
+//         docker {
+//             image 'jenkins/inbound-agent:latest-jdk21'
+//             args '-v /tmp:/tmp'
+//         }
+//     }
+//     stages {
+//         stage('Test') {
+//             steps {
+//                 sh 'node --version'
+//                 echo 'lole'
+//             }
+//         }
+//     }
+// }
 pipeline {
     agent any
     environment { 
@@ -8,6 +24,18 @@ pipeline {
         stage('Name initial branch') {
             steps {
                 echo "Initial branch: ${INITIAL_BRANCH}"
+            }
+        }
+        stage('Run docker hello world') {
+            when {
+                anyOf {
+                    branch 'feature/*'
+                }
+            }
+            steps {
+                sh 'whoami'
+                sh 'sudo docker run hello-world'
+                sh 'sudo docker ps'
             }
         }
         stage('Install npm') {
