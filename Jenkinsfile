@@ -1,19 +1,3 @@
-// pipeline {
-//     agent {
-//         docker {
-//             image 'jenkins/inbound-agent:latest-jdk21'
-//             args '-v /tmp:/tmp'
-//         }
-//     }
-//     stages {
-//         stage('Test') {
-//             steps {
-//                 sh 'node --version'
-//                 echo 'lole'
-//             }
-//         }
-//     }
-// }
 pipeline {
     agent any
     environment { 
