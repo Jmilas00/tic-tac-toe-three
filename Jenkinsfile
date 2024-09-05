@@ -87,7 +87,6 @@ pipeline {
                         sh 'git branch -a'
                         sh 'git fetch origin'
                         sh 'git checkout release || git checkout -b release origin/release'
-                        sh 'git checkout test || git checkout -b test origin/test'
                         sh 'git fetch origin test:test'
                         sh 'git merge test'
                         sh 'git push origin release'
