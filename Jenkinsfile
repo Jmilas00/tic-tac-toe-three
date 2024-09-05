@@ -33,7 +33,7 @@ pipeline {
                     ])
                     def branchName = env.INITIAL_BRANCH
                     sh 'git fetch --all'
-                    sh 'git checkout ${branchName}'
+                    //sh 'git checkout ${branchName}'
                 }
             }
         }
