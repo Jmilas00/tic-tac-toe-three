@@ -89,7 +89,9 @@ pipeline {
                         sh 'git checkout release || git checkout -b release origin/release'
                         sh 'git fetch origin test:test'
                         sh 'git merge test'
-                        sh 'git push origin release'
+                        withCredentials([usernamePassword(credentialsId: 'GiteaJosipAdmin', usernameVariable: 'GIT_USERNAME', passwordVariable: 'GIT_PASSWORD')]) {
+                            sh 'git push https://$GIT_USERNAME:$GIT_PASSWORD@gitea.josip-milas.buzz/ci/tic-tac-toe-three.git release'
+                        }
                     }
                 else {
                     echo 'Success!'
