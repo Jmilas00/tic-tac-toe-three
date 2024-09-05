@@ -21,22 +21,6 @@ pipeline {
         INITIAL_BRANCH = "${env.BRANCH_NAME}"
     }
     stages {
-        stage('Checkout') {
-            steps {
-                script {
-                    checkout([$class: 'GitSCM',
-                              branches: [[name: '*/main']],
-                              doGenerateSubmoduleConfigurations: false,
-                              extensions: [[$class: 'CloneOption', depth: 0, noTags: false, reference: '', shallow: false]],
-                              submoduleCfg: [],
-                              userRemoteConfigs: [[url: 'https://gitea.josip-milas.buzz/ci/tic-tac-toe-three.git/']]
-                    ])
-                    def branchName = env.INITIAL_BRANCH
-                    sh 'git fetch --all'
-                    //sh 'git checkout ${branchName}'
-                }
-            }
-        }
         stage('Name initial branch') {
             steps {
                 echo "Initial branch: ${INITIAL_BRANCH}"
@@ -105,6 +89,16 @@ pipeline {
                     echo 'Success on main!'
                 }
                 else if (env.INITIAL_BRANCH == 'test') {
+                    script {
+                    checkout([$class: 'GitSCM',
+                              branches: [[name: '*/main']],
+                              doGenerateSubmoduleConfigurations: false,
+                              extensions: [[$class: 'CloneOption', depth: 0, noTags: false, reference: '', shallow: false]],
+                              submoduleCfg: [],
+                              userRemoteConfigs: [[url: 'https://gitea.josip-milas.buzz/ci/tic-tac-toe-three.git/']]
+                    ])
+                    sh 'git fetch --all'
+                    }
                     echo 'Tests passed, attempting to merge into release'
                         sh 'git branch -a'
                         sh 'git fetch origin'
