@@ -23,62 +23,11 @@ pipeline {
                 sh 'sudo docker ps'
             }
         }
-        stage('Install npm') {
-            when {
-                anyOf {
-                    branch 'feature/*'
-                    branch 'test'
-                }
-            }
-            steps {
-                sh 'whoami'
-                sh 'sudo apt-get update'
-                sh 'sudo apt-get -y upgrade'
-                sh 'sudo apt-get -y install nodejs npm'
-                sh 'node -v'
-                sh 'npm -v'
-            }
-        }
-
-        stage('Install Dependencies') {
-            when {
-                branch 'test'
-            }
-            steps {
-                sh 'npm ci'
-            }
-        }
-
-        // stage('Run Tests') {
-        //     when {
-        //         branch 'test'
-        //     }
-        //     steps {
-        //         sh 'npm run test'
-        //         junit 'test-results.xml'
-        //     }
-        // }
-
-        // stage('Run tests in docker') {
-        //     when {
-        //         branch 'test'
-        //     }
-        //     steps {
-        //          script {
-        //             sh 'sudo docker build -t test-container-tictactoe -f Dockerfile.test .'
-        //             sh 'mkdir -p ${WORKSPACE}/test-reports'
-        //             sh 'sudo chmod -R 777 ${WORKSPACE}/test-reports'
-        //             sh 'sudo docker run --rm -v ${WORKSPACE}/test-reports:/test-reports test-container-tictactoe sh -c "mkdir -p /test-reports && npm run test"'
-        //             junit 'test-reports/test-results.xml'
-        //         }
-        //     }
-        // }
         stage('Build Docker Image') {
             when {
                 branch 'test'
             }
             steps {
-                sh 'ls'
                 sh 'sudo docker build -t test-container-tictactoe -f Dockerfile.test .'
             }
         }
@@ -87,10 +36,7 @@ pipeline {
                 branch 'test'
             }
             steps {
-                sh 'ls'
-                sh 'echo "Workspace is: ${WORKSPACE}"'
-                sh 'sudo docker run --rm -v ${WORKSPACE}:/TicTacToeThreeFile test-container-tictactoe'
-                sh 'ls -l ${WORKSPACE}'
+                sh 'sudo docker run --rm -v ${WORKSPACE}/test-results:/TicTacToeThreeFile/test-results test-container-tictactoe'
             }
         }
         stage('Publish Test Results') {
