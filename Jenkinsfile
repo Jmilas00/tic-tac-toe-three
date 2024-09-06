@@ -78,6 +78,7 @@ pipeline {
                 branch 'test'
             }
             steps {
+                sh 'ls'
                 sh 'sudo docker build -t test-container-tictactoe -f Dockerfile.test .'
             }
         }
@@ -86,7 +87,10 @@ pipeline {
                 branch 'test'
             }
             steps {
-                sh 'sudo docker run --rm -v ${WORKSPACE}/test-reports:/test-reports test-container-tictactoe'
+                sh 'ls'
+                sh 'echo "Workspace is: ${WORKSPACE}"'
+                sh 'sudo docker run --rm -v ${WORKSPACE}/test-reports:/TicTacToeThreeFile/test-reports test-container-tictactoe'
+                sh 'ls -l ${WORKSPACE}/test-reports'
             }
         }
         stage('Publish Test Results') {
@@ -94,6 +98,7 @@ pipeline {
                 branch 'test'
             }
             steps {
+                sh 'ls'
                 junit 'test-reports/test-results.xml'
             }
         }
