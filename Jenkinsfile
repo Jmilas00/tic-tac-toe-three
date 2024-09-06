@@ -89,8 +89,8 @@ pipeline {
             steps {
                 sh 'ls'
                 sh 'echo "Workspace is: ${WORKSPACE}"'
-                sh 'sudo docker run --rm -v ${WORKSPACE}/test-reports:/TicTacToeThreeFile/test-reports test-container-tictactoe'
-                sh 'ls -l ${WORKSPACE}/test-reports'
+                sh 'sudo docker run --rm -v ${WORKSPACE}:/TicTacToeThreeFile test-container-tictactoe'
+                sh 'ls -l ${WORKSPACE}'
             }
         }
         stage('Publish Test Results') {
@@ -99,7 +99,7 @@ pipeline {
             }
             steps {
                 sh 'ls'
-                junit 'test-reports/test-results.xml'
+                junit 'test-results.xml'
             }
         }
 
