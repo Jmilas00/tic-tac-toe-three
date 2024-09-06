@@ -65,10 +65,8 @@ pipeline {
             }
             steps {
                  script {
-                    def customImage = docker.build('your-image-name', '-f Dockerfile.test .')
-                    customImage.inside('-v ${WORKSPACE}/test-reports:/test-reports') {
-                        echo "Running tests inside Docker container, tests will be reported to the test-reports folder"
-                    }
+                    sh 'sudo docker build -t testContainerMasters -f Dockerfile.test .'
+                    sh 'sudo docker run --rm -v ${WORKSPACE}/test-reports:/test-reports testContainerMasters npm run test'
                     junit 'test-reports/test-results.xml'
                 }
             }
