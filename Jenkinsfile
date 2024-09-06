@@ -14,6 +14,7 @@ pipeline {
             when {
                 anyOf {
                     branch 'feature/*'
+                    branch 'test'
                 }
             }
             steps {
@@ -48,15 +49,31 @@ pipeline {
             }
         }
 
-        stage('Run Tests') {
+        // stage('Run Tests') {
+        //     when {
+        //         branch 'test'
+        //     }
+        //     steps {
+        //         sh 'npm run test'
+        //         junit 'test-results.xml'
+        //     }
+        // }
+
+        stage('Run tests in docker') {
             when {
                 branch 'test'
             }
             steps {
-                sh 'npm run test'
-                junit 'test-results.xml'
+                 script {
+                    def customImage = docker.build('your-image-name', '-f Dockerfile.test .')
+                    customImage.inside('-v ${WORKSPACE}/test-reports:/test-reports') {
+                        echo "Running tests inside Docker container, tests will be reported to the test-reports folder"
+                    }
+                    junit 'test-reports/test-results.xml'
+                }
             }
         }
+
         stage('Deploy') {
             when {
                 branch 'release'
