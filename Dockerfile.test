@@ -1,0 +1,13 @@
+FROM node:20.12.2-alpine3.19 AS test
+
+RUN mkdir -p /TicTacToeThreeFile/test-results && chmod -R 777 /TicTacToeThreeFile/test-results
+
+WORKDIR /TicTacToeThreeFile
+
+COPY package*.json ./
+
+RUN npm ci
+
+COPY . .
+
+CMD ["npm", "run", "test"]
