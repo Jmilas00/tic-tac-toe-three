@@ -59,18 +59,42 @@ pipeline {
         //     }
         // }
 
-        stage('Run tests in docker') {
+        // stage('Run tests in docker') {
+        //     when {
+        //         branch 'test'
+        //     }
+        //     steps {
+        //          script {
+        //             sh 'sudo docker build -t test-container-tictactoe -f Dockerfile.test .'
+        //             sh 'mkdir -p ${WORKSPACE}/test-reports'
+        //             sh 'sudo chmod -R 777 ${WORKSPACE}/test-reports'
+        //             sh 'sudo docker run --rm -v ${WORKSPACE}/test-reports:/test-reports test-container-tictactoe sh -c "mkdir -p /test-reports && npm run test"'
+        //             junit 'test-reports/test-results.xml'
+        //         }
+        //     }
+        // }
+        stage('Build Docker Image') {
             when {
                 branch 'test'
             }
             steps {
-                 script {
-                    sh 'sudo docker build -t test-container-tictactoe -f Dockerfile.test .'
-                    sh 'mkdir -p ${WORKSPACE}/test-reports'
-                    sh 'sudo chmod -R 777 ${WORKSPACE}/test-reports'
-                    sh 'sudo docker run --rm -v ${WORKSPACE}/test-reports:/test-reports test-container-tictactoe npm run test'
-                    junit 'test-reports/test-results.xml'
-                }
+                sh 'sudo docker build -t test-container-tictactoe -f Dockerfile.test .'
+            }
+        }
+        stage('Run Tests in Docker') {
+            when {
+                branch 'test'
+            }
+            steps {
+                sh 'sudo docker run --rm -v ${WORKSPACE}/test-reports:/test-reports test-container-tictactoe'
+            }
+        }
+        stage('Publish Test Results') {
+            when {
+                branch 'test'
+            }
+            steps {
+                junit 'test-reports/test-results.xml'
             }
         }
 
