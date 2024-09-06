@@ -69,6 +69,7 @@ pipeline {
                     customImage.inside('-v ${WORKSPACE}/test-reports:/test-reports') {
                         echo "Running tests inside Docker container, tests will be reported to the test-reports folder"
                     }
+                    junit 'test-reports/test-results.xml'
                 }
             }
         }
@@ -118,9 +119,6 @@ pipeline {
             echo 'Pipeline failed.'
         }
         always {
-            if (env.INITIAL_BRANCH == 'test') {
-                junit 'test-reports/test-results.xml'
-            }
             echo 'Pipeline finished.'
         }
     }
