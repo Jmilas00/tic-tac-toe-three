@@ -65,8 +65,8 @@ pipeline {
             }
             steps {
                  script {
-                    sh 'sudo docker build -t testContainerMasters -f Dockerfile.test .'
-                    sh 'sudo docker run --rm -v ${WORKSPACE}/test-reports:/test-reports testContainerMasters npm run test'
+                    sh 'sudo docker build -t test-container-tictactoe -f Dockerfile.test .'
+                    sh 'sudo docker run --rm -v ${WORKSPACE}/test-reports:/test-reports test-container-tictactoe npm run test'
                     junit 'test-reports/test-results.xml'
                 }
             }
