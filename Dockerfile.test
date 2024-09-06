@@ -1,6 +1,6 @@
 FROM node:20.12.2-alpine3.19 AS test
 
-RUN mkdir /TicTacToeThreeFile /test-reports
+RUN mkdir /TicTacToeThreeFile /test-reports && chmod -R 777 /test-reports
 
 WORKDIR /TicTacToeThreeFile
 
